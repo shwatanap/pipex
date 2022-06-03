@@ -6,14 +6,15 @@
 /*   By: shwatana <shwatana@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 20:10:39 by shwatana          #+#    #+#             */
-/*   Updated: 2022/06/03 22:28:30 by shwatana         ###   ########.fr       */
+/*   Updated: 2022/06/04 03:25:28 by shwatana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/pipex.h"
 
-void	child_process(char **argv, char **envp, int pipe_fd[2]);
-void	parent_process(char **argv, char **envp, int pipe_fd[2]);
+static void	child_process(char **argv, char **envp, int pipe_fd[2]);
+static void	parent_process(char **argv, char **envp, int pipe_fd[2]);
+static void	display_usage_with_exit(void);
 
 int	main(int argc, char **argv, char **envp)
 {
@@ -22,12 +23,7 @@ int	main(int argc, char **argv, char **envp)
 
 	(void)argv;
 	if (argc != 5)
-	{
-		ft_putstr_fd("\033[31mError: Bad arguments\n\e[0m", STDERR_FILENO);
-		ft_putstr_fd("Usage: ./pipex <infile> <cmd1> <cmd2> <outfile>\n",
-						STDOUT_FILENO);
-		return (1);
-	}
+		display_usage_with_exit();
 	if (pipe(pipe_fd) == FAIL)
 		perror_with_exit("pipe");
 	pid = fork();
@@ -41,9 +37,10 @@ int	main(int argc, char **argv, char **envp)
 			perror_with_exit("waitpid");
 		parent_process(argv, envp, pipe_fd);
 	}
+	return (EXIT_SUCCESS);
 }
 
-void	child_process(char **argv, char **envp, int pipe_fd[2])
+static void	child_process(char **argv, char **envp, int pipe_fd[2])
 {
 	int	in_file_fd;
 
@@ -57,7 +54,7 @@ void	child_process(char **argv, char **envp, int pipe_fd[2])
 	execute(argv[2], envp);
 }
 
-void	parent_process(char **argv, char **envp, int pipe_fd[2])
+static void	parent_process(char **argv, char **envp, int pipe_fd[2])
 {
 	int	out_file_fd;
 
@@ -69,4 +66,12 @@ void	parent_process(char **argv, char **envp, int pipe_fd[2])
 	dup2(out_file_fd, STDOUT_FILENO);
 	close(pipe_fd[PIPE_IN_FD]);
 	execute(argv[3], envp);
+}
+
+static void	display_usage_with_exit(void)
+{
+	perror("Bad arguments");
+	ft_putstr_fd("Usage: ./pipex <infile> <cmd1> <cmd2> <outfile>\n",
+		STDOUT_FILENO);
+	exit(EXIT_FAILURE);
 }
