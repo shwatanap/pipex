@@ -49,6 +49,5 @@ $(TESTER):
 	git clone git@github.com:Yoo0lh/pipex_tester_42.git
 
 test: $(TESTER)
-	./$(TESTER)/pipex_tester.sh a
 
 .PHONY: all clean fclean re bonus

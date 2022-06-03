@@ -6,7 +6,7 @@
 /*   By: shwatana <shwatana@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 18:31:18 by shwatana          #+#    #+#             */
-/*   Updated: 2022/06/03 21:02:00 by shwatana         ###   ########.fr       */
+/*   Updated: 2022/06/03 21:49:32 by shwatana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,5 +26,6 @@
 
 // utils.c
 void	perror_with_exit(const char *str);
+void	execute(char *argv, char **envp);
 
 #endif
