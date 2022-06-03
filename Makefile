@@ -38,11 +38,10 @@ clean:
 	$(RM) $(OBJDIR)
 
 fclean: clean
-	make -C $(LIBFTDIR) fclean
-	$(RM) $(LIBDIR)
+	$(RM) $(LIBFT)
+	$(RM) $(NAME)
 
 re: fclean all
-	make -C $(LIBFTDIR) re
 
 norm:
 	make -C $(LIBFTDIR) norm
