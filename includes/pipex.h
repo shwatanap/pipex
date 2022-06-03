@@ -6,7 +6,7 @@
 /*   By: shwatana <shwatana@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 18:31:18 by shwatana          #+#    #+#             */
-/*   Updated: 2022/06/03 22:28:28 by shwatana         ###   ########.fr       */
+/*   Updated: 2022/06/03 22:55:11 by shwatana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@
 # define CPID 0
 # define PIPE_IN_FD 0
 # define PIPE_OUT_FD 1
+# define SUCCESS 0
 
 // utils.c
 void	perror_with_exit(const char *str);
