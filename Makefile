@@ -1,6 +1,7 @@
 FILES	 = pipex.c utils.c
-SRCS	 = $(addprefix $(SRCDIR)/, $(FILES))
+BFILES    = pipex_bonus.c utils.c
 OBJS	 = $(addprefix $(OBJDIR)/, $(FILES:.c=.o))
+BOBJS	 = $(addprefix $(OBJDIR)/, $(BFILES:.c=.o))
 SRCDIR	 = srcs
 OBJDIR	 = objs
 CC		 = cc
@@ -16,7 +17,7 @@ TESTER	 = pipex_tester_42
 all: $(OBJDIR) $(NAME)
 
 ifdef WITH_BONUS
-  OBJS += $(BOBJS)
+  OBJS = $(BOBJS)
 endif
 
 bonus:
@@ -25,7 +26,7 @@ bonus:
 # サニタイザーを消してください！！！！！！！
 $(NAME): $(OBJS)
 	make -C $(LIBFTDIR)
-	$(CC) -o $(NAME) $(OBJS) $(LIBFT) -g -fsanitize=address
+	$(CC) -o $(NAME) $^ $(LIBFT) -g -fsanitize=address
 
 $(OBJDIR)/%.o: $(SRCDIR)/%.c
 	$(CC) $(CFLAGS) -I $(INCDIR) -c $< -o $@
@@ -45,7 +46,7 @@ re: fclean all
 
 norm:
 	make -C $(LIBFTDIR) norm
-	norminette $(SRCS) $(INCDIR)
+	norminette $(SRCDIR)$(INCDIR)
 
 debug: $(NAME)
 	./$(NAME) README.md "cat -e" "tail -n 5" output.txt

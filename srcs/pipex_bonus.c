@@ -1,34 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex.h                                            :+:      :+:    :+:   */
+/*   pipex_bonus.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: shwatana <shwatana@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/06/03 18:31:18 by shwatana          #+#    #+#             */
-/*   Updated: 2022/06/04 03:46:57 by shwatana         ###   ########.fr       */
+/*   Created: 2022/06/04 03:40:55 by shwatana          #+#    #+#             */
+/*   Updated: 2022/06/04 03:43:00 by shwatana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PIPEX_H
-# define PIPEX_H
+#include "../includes/pipex.h"
 
-# include "../libft/includes/libft.h"
-# include <fcntl.h>
-# include <stdio.h>
-# include <stdlib.h>
-# include <string.h>
-# include <sys/wait.h>
-# include <unistd.h>
-
-# define FAIL -1
-# define CPID 0
-# define PIPE_IN_FD 0
-# define PIPE_OUT_FD 1
-# define SUCCESS 0
-
-// utils.c
-void	execute(char *argv, char **envp);
-void	perror_with_exit(const char *str);
-
-#endif
+int	main(void)
+{
+	printf("Hello Bonus\n");
+	return (0);
+}
