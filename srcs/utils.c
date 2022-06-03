@@ -6,7 +6,7 @@
 /*   By: shwatana <shwatana@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 20:49:33 by shwatana          #+#    #+#             */
-/*   Updated: 2022/06/04 02:07:28 by shwatana         ###   ########.fr       */
+/*   Updated: 2022/06/04 02:24:01 by shwatana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,15 +31,29 @@ static void	split_free(char **strs)
 	free(strs);
 }
 
+static char	*make_cmd_path(char *path, char *cmd)
+{
+	char	*cmd_dir;
+	char	*cmd_path;
+
+	cmd_dir = ft_strjoin(path, "/");
+	if (cmd_dir == NULL)
+		perror_with_exit("ft_strjoin");
+	cmd_path = ft_strjoin(cmd_dir, cmd);
+	if (cmd_path == NULL)
+		perror_with_exit("ft_strjoin");
+	free(cmd_dir);
+	return (cmd_path);
+}
+
 char	*find_path(char *cmd, char **envp)
 {
 	char	**paths;
 	char	*path;
 	int		i;
-	char	*cmd_dir;
 
 	i = 0;
-	while (ft_strnstr(envp[i], "PATH=", 5) == 0)
+	while (envp[i] != NULL && ft_strnstr(envp[i], "PATH=", 5) == NULL)
 		i++;
 	paths = ft_split(envp[i] + 5, ':');
 	if (paths == NULL)
@@ -47,13 +61,7 @@ char	*find_path(char *cmd, char **envp)
 	i = 0;
 	while (paths[i])
 	{
-		cmd_dir = ft_strjoin(paths[i], "/");
-		if (cmd_dir == NULL)
-			perror_with_exit("ft_strjoin");
-		path = ft_strjoin(cmd_dir, cmd);
-		if (path == NULL)
-			perror_with_exit("ft_strjoin");
-		free(cmd_dir);
+		path = make_cmd_path(paths[i], cmd);
 		if (access(path, F_OK) == SUCCESS)
 		{
 			split_free(paths);
