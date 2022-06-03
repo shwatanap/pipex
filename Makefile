@@ -1,4 +1,4 @@
-FILES	= pipex.c
+FILES	= pipex.c utils.c
 SRCS	= $(addprefix $(SRCDIR)/, $(FILES))
 OBJS	= $(addprefix $(OBJDIR)/, $(FILES:.c=.o))
 SRCDIR	:= srcs
@@ -10,7 +10,6 @@ LIBFT	= ./libft/lib/libft.a
 CFLAGS	= -Wall -Wextra -Werror
 RM		= rm -rf
 AR		= ar rc
-
 TESTER	= pipex_tester_42
 
 all: $(OBJDIR) $(NAME)
