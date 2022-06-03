@@ -39,8 +39,11 @@ fclean: clean
 
 re: fclean all
 
+norm:
+	norminette $(SRCS) $(INCDIR)
+
 debug: $(NAME)
-	./$(NAME)
+	./$(NAME) README.md "cat -e" "tail -n 5" output.txt
 
 $(TESTER):
 	git clone git@github.com:Yoo0lh/pipex_tester_42.git
