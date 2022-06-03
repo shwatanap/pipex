@@ -46,7 +46,7 @@ re: fclean all
 
 norm:
 	make -C $(LIBFTDIR) norm
-	norminette $(SRCDIR)$(INCDIR)
+	norminette $(SRCDIR) $(INCDIR)
 
 debug: $(NAME)
 	./$(NAME) README.md "cat -e" "tail -n 5" output.txt
