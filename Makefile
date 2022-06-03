@@ -4,11 +4,14 @@ OBJS	= $(addprefix $(OBJDIR)/, $(FILES:.c=.o))
 SRCDIR	:= srcs
 OBJDIR	:= objs
 CC		= cc
-NAME	= pipex.a
-INCDIR	:= includes
+NAME	= pipex
+INCDIR	= includes
+LIBFT	= ./libft/lib/libft.a
 CFLAGS	= -Wall -Wextra -Werror
 RM		= rm -rf
 AR		= ar rc
+
+TESTER	= pipex_tester_42
 
 all: $(OBJDIR) $(NAME)
 
@@ -20,7 +23,8 @@ bonus:
 	@make WITH_BONUS=true
 
 $(NAME): $(OBJS)
-	$(AR) $(NAME) $(OBJS)
+	make -C ./libft
+	$(CC) -o $(NAME) $(OBJS) $(LIBFT)
 
 $(OBJDIR)/%.o: $(SRCDIR)/%.c
 	$(CC) $(CFLAGS) -I $(INCDIR) -c $< -o $@
@@ -35,5 +39,14 @@ fclean: clean
 	$(RM) $(LIBDIR)
 
 re: fclean all
+
+debug: $(NAME)
+	./$(NAME)
+
+$(TESTER):
+	git clone git@github.com:Yoo0lh/pipex_tester_42.git
+
+test: $(TESTER)
+	./$(TESTER)/pipex_tester.sh a
 
 .PHONY: all clean fclean re bonus
