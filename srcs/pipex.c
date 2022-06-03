@@ -6,7 +6,7 @@
 /*   By: shwatana <shwatana@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 20:10:39 by shwatana          #+#    #+#             */
-/*   Updated: 2022/06/04 04:08:48 by shwatana         ###   ########.fr       */
+/*   Updated: 2022/06/04 04:56:24 by shwatana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,9 +47,12 @@ static void	child_process(char **argv, char **envp, int pipe_fd[2])
 	if (in_file_fd == FAIL)
 		perror_with_exit("open");
 	close(pipe_fd[PIPE_IN_FD]);
+	close(STDIN_FILENO);
+	close(STDOUT_FILENO);
 	dup2(pipe_fd[PIPE_OUT_FD], STDOUT_FILENO);
-	dup2(in_file_fd, STDIN_FILENO);
 	close(pipe_fd[PIPE_OUT_FD]);
+	dup2(in_file_fd, STDIN_FILENO);
+	close(in_file_fd);
 	execute(argv[2], envp);
 }
 
@@ -61,9 +64,12 @@ static void	parent_process(char **argv, char **envp, int pipe_fd[2])
 	if (out_file_fd == FAIL)
 		perror_with_exit("open");
 	close(pipe_fd[PIPE_OUT_FD]);
+	close(STDIN_FILENO);
+	close(STDOUT_FILENO);
 	dup2(pipe_fd[PIPE_IN_FD], STDIN_FILENO);
-	dup2(out_file_fd, STDOUT_FILENO);
 	close(pipe_fd[PIPE_IN_FD]);
+	dup2(out_file_fd, STDOUT_FILENO);
+	close(out_file_fd);
 	execute(argv[3], envp);
 }
 
