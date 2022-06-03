@@ -6,7 +6,7 @@
 /*   By: shwatana <shwatana@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 20:10:39 by shwatana          #+#    #+#             */
-/*   Updated: 2022/06/04 03:25:28 by shwatana         ###   ########.fr       */
+/*   Updated: 2022/06/04 04:08:48 by shwatana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ int	main(int argc, char **argv, char **envp)
 	int		pipe_fd[2];
 	pid_t	pid;
 
-	(void)argv;
 	if (argc != 5)
 		display_usage_with_exit();
 	if (pipe(pipe_fd) == FAIL)
@@ -70,7 +69,9 @@ static void	parent_process(char **argv, char **envp, int pipe_fd[2])
 
 static void	display_usage_with_exit(void)
 {
-	perror("Bad arguments");
+	ft_putstr_fd(ESC_CLR_RED, STDERR_FILENO);
+	perror(ARG_ERR_MSG);
+	ft_putstr_fd(ESC_RESET, STDERR_FILENO);
 	ft_putstr_fd("Usage: ./pipex <infile> <cmd1> <cmd2> <outfile>\n",
 		STDOUT_FILENO);
 	exit(EXIT_FAILURE);

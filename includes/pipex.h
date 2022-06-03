@@ -6,7 +6,7 @@
 /*   By: shwatana <shwatana@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 18:31:18 by shwatana          #+#    #+#             */
-/*   Updated: 2022/06/04 03:46:57 by shwatana         ###   ########.fr       */
+/*   Updated: 2022/06/04 04:08:09 by shwatana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,10 @@
 # define PIPE_IN_FD 0
 # define PIPE_OUT_FD 1
 # define SUCCESS 0
+# define ARG_ERR_MSG "Bad Argument Error"
+
+# define ESC_RESET "\033[0m"
+# define ESC_CLR_RED "\033[38;5;01m"
 
 // utils.c
 void	execute(char *argv, char **envp);
