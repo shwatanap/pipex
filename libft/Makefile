@@ -27,13 +27,6 @@ AR		= ar rc
 
 all: $(LIBDIR) $(OBJDIR) $(NAME)
 
-ifdef WITH_BONUS
-  OBJS += $(BOBJS)
-endif
-
-bonus:
-	@make WITH_BONUS=true
-
 $(NAME): $(OBJS)
 	$(AR) $(NAME) $(OBJS)
 
@@ -53,5 +46,8 @@ fclean: clean
 	$(RM) $(LIBDIR)
 
 re: fclean all
+
+norm:
+	norminette $(SRCDIR) $(INCDIR)
 
 .PHONY: all clean fclean re bonus
