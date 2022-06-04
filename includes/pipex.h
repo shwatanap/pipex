@@ -6,7 +6,7 @@
 /*   By: shwatana <shwatana@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 18:31:18 by shwatana          #+#    #+#             */
-/*   Updated: 2022/06/04 04:08:09 by shwatana         ###   ########.fr       */
+/*   Updated: 2022/06/04 14:28:14 by shwatana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,18 +21,32 @@
 # include <sys/wait.h>
 # include <unistd.h>
 
-# define FAIL -1
 # define CPID 0
-# define PIPE_IN_FD 0
-# define PIPE_OUT_FD 1
+# define FAIL -1
 # define SUCCESS 0
 # define ARG_ERR_MSG "Bad Argument Error"
 
 # define ESC_RESET "\033[0m"
 # define ESC_CLR_RED "\033[38;5;01m"
 
+typedef enum e_pipe_fd
+{
+	PIPE_IN_FD,
+	PIPE_OUT_FD,
+}		t_pipe_fd;
+
+typedef enum e_open_mode
+{
+	FILE_APPEND_WRITE,
+	FILE_OVER_WRITE,
+	FILE_READ,
+}		t_open_mode;
+
 // utils.c
 void	execute(char *argv, char **envp);
 void	perror_with_exit(const char *str);
+
+// utils_bonus.c
+int		open_file(char *file_path, t_open_mode i);
 
 #endif
