@@ -6,7 +6,7 @@
 /*   By: shwatana <shwatana@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/04 03:40:55 by shwatana          #+#    #+#             */
-/*   Updated: 2022/06/04 22:50:55 by shwatana         ###   ########.fr       */
+/*   Updated: 2022/06/04 23:10:12 by shwatana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 static int	input_process(int argc, char **argv, int *out_file_fd);
 static void	here_doc(char *limiter);
+static void	here_doc_child_process(int pipe_fd[2], char *limiter);
 static void	child_process(char *cmd, char **envp);
-static void	display_usage_with_exit(void);
 
 int	main(int argc, char **argv, char **envp)
 {
@@ -62,7 +62,6 @@ static void	here_doc(char *limiter)
 {
 	int		pipe_fd[2];
 	pid_t	pid;
-	char	*line;
 
 	if (pipe(pipe_fd) == FAIL)
 		perror_with_exit("pipe");
@@ -70,23 +69,30 @@ static void	here_doc(char *limiter)
 	if (pid == FAIL)
 		perror_with_exit("fork");
 	if (pid == CPID)
-	{
-		close(pipe_fd[PIPE_IN_FD]);
-		line = NULL;
-		while (!ft_read_line(&line))
-		{
-			if (ft_strncmp(line, limiter, ft_strlen(limiter)) == SUCCESS
-				&& line[ft_strlen(limiter)] == '\n')
-				exit(EXIT_SUCCESS);
-			ft_putstr_fd(line, pipe_fd[PIPE_OUT_FD]);
-			free(line);
-			line = NULL;
-		}
-		exit(EXIT_FAILURE);
-	}
+		here_doc_child_process(pipe_fd, limiter);
 	close(pipe_fd[PIPE_OUT_FD]);
+	close(STDIN_FILENO);
 	dup2(pipe_fd[PIPE_IN_FD], STDIN_FILENO);
+	close(pipe_fd[PIPE_IN_FD]);
 	wait(NULL);
+}
+
+static void	here_doc_child_process(int pipe_fd[2], char *limiter)
+{
+	char	*line;
+
+	line = NULL;
+	close(pipe_fd[PIPE_IN_FD]);
+	while (!ft_read_line(&line))
+	{
+		if (ft_strncmp(line, limiter, ft_strlen(limiter)) == SUCCESS
+			&& line[ft_strlen(limiter)] == '\n')
+			exit(EXIT_SUCCESS);
+		ft_putstr_fd(line, pipe_fd[PIPE_OUT_FD]);
+		free(line);
+		line = NULL;
+	}
+	exit(EXIT_FAILURE);
 }
 
 static void	child_process(char *cmd, char **envp)
@@ -113,16 +119,4 @@ static void	child_process(char *cmd, char **envp)
 	close(STDIN_FILENO);
 	dup2(pipe_fd[PIPE_IN_FD], STDIN_FILENO);
 	close(pipe_fd[PIPE_IN_FD]);
-}
-
-static void	display_usage_with_exit(void)
-{
-	ft_putstr_fd(ESC_CLR_RED, STDERR_FILENO);
-	perror(ARG_ERR_MSG);
-	ft_putstr_fd(ESC_RESET, STDERR_FILENO);
-	ft_putstr_fd("Usage:\n  ./pipex <infile> <cmd1> <cmd2> <outfile>\n",
-					STDOUT_FILENO);
-	ft_putstr_fd("  ./pipex \"here_doc\" <LIMITER> <cmd> <cmd1> <...> <outfile>\n",
-					STDOUT_FILENO);
-	exit(EXIT_FAILURE);
 }

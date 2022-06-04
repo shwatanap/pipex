@@ -6,7 +6,7 @@
 /*   By: shwatana <shwatana@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 18:31:18 by shwatana          #+#    #+#             */
-/*   Updated: 2022/06/04 22:52:43 by shwatana         ###   ########.fr       */
+/*   Updated: 2022/06/04 22:59:02 by shwatana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ typedef enum e_open_mode
 // utils_bonus.c
 int		open_file(char *file_path, t_open_mode i);
 bool	ft_read_line(char **line);
+void	display_usage_with_exit(void);
 
 // utils_bonus2.c
 void	execute(char *argv, char **envp);
