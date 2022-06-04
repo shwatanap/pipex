@@ -26,7 +26,7 @@ bonus:
 # サニタイザーを消してください！！！！！！！
 $(NAME): $(OBJS)
 	make -C $(LIBFTDIR)
-	$(CC) -o $(NAME) $^ $(LIBFT)
+	$(CC) -o $(NAME) $^ $(LIBFT) -g -fsanitize=address
 
 $(OBJDIR)/%.o: $(SRCDIR)/%.c
 	$(CC) $(CFLAGS) -I $(INCDIR) -c $< -o $@
@@ -43,6 +43,8 @@ fclean: clean
 	$(RM) $(NAME)
 
 re: fclean all
+
+rebonus: fclean bonus
 
 norm:
 	make -C $(LIBFTDIR) norm

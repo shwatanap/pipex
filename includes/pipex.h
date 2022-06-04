@@ -6,7 +6,7 @@
 /*   By: shwatana <shwatana@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 18:31:18 by shwatana          #+#    #+#             */
-/*   Updated: 2022/06/04 18:06:03 by shwatana         ###   ########.fr       */
+/*   Updated: 2022/06/04 22:43:09 by shwatana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,5 +50,6 @@ void	perror_with_exit(const char *str);
 
 // utils_bonus.c
 int		open_file(char *file_path, t_open_mode i);
+bool	ft_read_line(char **line);
 
 #endif
