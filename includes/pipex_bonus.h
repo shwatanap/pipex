@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex.h                                            :+:      :+:    :+:   */
+/*   pipex_bonus.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: shwatana <shwatana@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 18:31:18 by shwatana          #+#    #+#             */
-/*   Updated: 2022/06/04 22:50:49 by shwatana         ###   ########.fr       */
+/*   Updated: 2022/06/04 22:52:43 by shwatana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PIPEX_H
-# define PIPEX_H
+#ifndef PIPEX_BONUS_H
+# define PIPEX_BONUS_H
 
 # include "../libft/includes/libft.h"
 # include <fcntl.h>
@@ -44,7 +44,11 @@ typedef enum e_open_mode
 	FILE_READ,
 }		t_open_mode;
 
-// utils.c
+// utils_bonus.c
+int		open_file(char *file_path, t_open_mode i);
+bool	ft_read_line(char **line);
+
+// utils_bonus2.c
 void	execute(char *argv, char **envp);
 void	perror_with_exit(const char *str);
 

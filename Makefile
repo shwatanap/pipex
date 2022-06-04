@@ -1,18 +1,18 @@
-FILES	 = pipex.c utils.c
-BFILES    = pipex_bonus.c utils.c utils_bonus.c
-OBJS	 = $(addprefix $(OBJDIR)/, $(FILES:.c=.o))
-BOBJS	 = $(addprefix $(OBJDIR)/, $(BFILES:.c=.o))
-SRCDIR	 = srcs
-OBJDIR	 = objs
-CC		 = cc
-NAME	 = pipex
-INCDIR	 = includes
-LIBFTDIR = ./libft
-LIBFT	 = $(LIBFTDIR)/lib/libft.a
-CFLAGS	 = -Wall -Wextra -Werror
-RM		 = rm -rf
-AR		 = ar rc
-TESTER	 = pipex_tester_42
+FILES		= pipex.c utils.c
+BFILES		= pipex_bonus.c utils_bonus.c utils_bonus2.c
+OBJS		= $(addprefix $(OBJDIR)/, $(FILES:.c=.o))
+BOBJS		= $(addprefix $(OBJDIR)/, $(BFILES:.c=.o))
+SRCDIR		= srcs
+OBJDIR		= objs
+CC			= cc
+NAME		= pipex
+INCDIR		= includes
+LIBFTDIR	= ./libft
+LIBFT		= $(LIBFTDIR)/lib/libft.a
+CFLAGS		= -Wall -Wextra -Werror
+RM			= rm -rf
+AR			= ar rc
+TESTER		= pipex_tester_42
 
 all: $(OBJDIR) $(NAME)
 
@@ -26,7 +26,7 @@ bonus:
 # サニタイザーを消してください！！！！！！！
 $(NAME): $(OBJS)
 	make -C $(LIBFTDIR)
-	$(CC) -o $(NAME) $^ $(LIBFT) -g -fsanitize=address
+	$(CC) -o $(NAME) $^ $(LIBFT) #-g -fsanitize=address
 
 $(OBJDIR)/%.o: $(SRCDIR)/%.c
 	$(CC) $(CFLAGS) -I $(INCDIR) -c $< -o $@

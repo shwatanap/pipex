@@ -6,19 +6,12 @@
 /*   By: shwatana <shwatana@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/04 13:56:50 by shwatana          #+#    #+#             */
-/*   Updated: 2022/06/04 22:41:56 by shwatana         ###   ########.fr       */
+/*   Updated: 2022/06/04 22:51:19 by shwatana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/pipex.h"
+#include "../includes/pipex_bonus.h"
 
-/**
- * @brief
- *
- * @param file_path
- * @param i
- * @return int
- */
 int	open_file(char *file_path, t_open_mode i)
 {
 	int	file;
