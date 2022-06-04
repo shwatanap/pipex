@@ -6,7 +6,7 @@
 /*   By: shwatana <shwatana@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/04 03:40:55 by shwatana          #+#    #+#             */
-/*   Updated: 2022/06/04 18:01:17 by shwatana         ###   ########.fr       */
+/*   Updated: 2022/06/04 18:06:31 by shwatana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ static int	input_process(int argc, char **argv, int *out_file_fd)
 	int	in_file_fd;
 	int	first_cmd_idx;
 
-	if (ft_strncmp(argv[1], "here_doc", 8) == 0)
+	if (ft_strncmp(argv[1], HERE_DOG_STR, HERE_DOG_STR_LEN) == SUCCESS)
 	{
 		*out_file_fd = open_file(argv[argc - 1], FILE_APPEND_WRITE);
 		here_doc(argv[2], argc);

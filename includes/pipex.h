@@ -6,7 +6,7 @@
 /*   By: shwatana <shwatana@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 18:31:18 by shwatana          #+#    #+#             */
-/*   Updated: 2022/06/04 14:28:14 by shwatana         ###   ########.fr       */
+/*   Updated: 2022/06/04 18:06:03 by shwatana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@
 # define FAIL -1
 # define SUCCESS 0
 # define ARG_ERR_MSG "Bad Argument Error"
+# define HERE_DOG_STR "here_doc"
+# define HERE_DOG_STR_LEN 8
 
 # define ESC_RESET "\033[0m"
 # define ESC_CLR_RED "\033[38;5;01m"
