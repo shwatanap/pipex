@@ -32,9 +32,9 @@ void	execute(char *arg, char **envp)
 
 void	perror_with_exit(const char *str)
 {
-	ft_putstr_fd("\033[31m", STDERR_FILENO);
+	ft_putstr_fd(ESC_CLR_RED, STDERR_FILENO);
 	perror(str);
-	ft_putstr_fd("\e[0m", STDERR_FILENO);
+	ft_putstr_fd(ESC_RESET, STDERR_FILENO);
 	exit(EXIT_FAILURE);
 }
 
