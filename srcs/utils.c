@@ -6,7 +6,7 @@
 /*   By: shwatana <shwatana@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 20:49:33 by shwatana          #+#    #+#             */
-/*   Updated: 2022/06/04 04:00:46 by shwatana         ###   ########.fr       */
+/*   Updated: 2022/06/04 16:01:58 by shwatana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,18 +17,18 @@ static char	*make_cmd_path(char *path, char *cmd);
 static char	*find_path(char *cmd, char **envp);
 static void	split_free(char **strs);
 
-void	execute(char *argv, char **envp)
+void	execute(char *arg, char **envp)
 {
 	char	**cmd;
 	char	*path;
 
-	cmd = ft_split(argv, ' ');
+	cmd = ft_split(arg, ' ');
 	if (cmd == NULL)
 		perror_with_exit("split");
 	path = find_path(cmd[0], envp);
 	if (execve(path, cmd, envp) == FAIL)
 		perror_with_exit("execve");
-	split_free(cmd);
+	// split_free(cmd);
 }
 
 void	perror_with_exit(const char *str)

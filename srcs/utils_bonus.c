@@ -6,7 +6,7 @@
 /*   By: shwatana <shwatana@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/04 13:56:50 by shwatana          #+#    #+#             */
-/*   Updated: 2022/06/04 14:27:39 by shwatana         ###   ########.fr       */
+/*   Updated: 2022/06/04 17:58:07 by shwatana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	open_file(char *file_path, t_open_mode i)
 		file = open(file_path, O_RDONLY, 0777);
 	else
 		perror("open_file");
-	if (file == -1)
-		error();
+	if (file == FAIL)
+		perror("open");
 	return (file);
 }
