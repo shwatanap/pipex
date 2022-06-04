@@ -55,6 +55,7 @@ debug: $(NAME)
 
 $(TESTER):
 	git clone git@github.com:Yoo0lh/pipex_tester_42.git
+	git clone git@github.com:ael-bekk/PIPEX_TESTER.git
 
 test: $(TESTER)
 	./pipex_tester.sh m
