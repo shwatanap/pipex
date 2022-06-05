@@ -62,8 +62,8 @@ static char	*find_path(char *cmd, char **envp)
 		free(path);
 		i++;
 	}
-	perror_with_exit("cmd not found");
-	return (NULL);
+	perror("cmd not found");
+	exit(EXIT_CMD_NOT_FOUND);
 }
 
 static char	*make_cmd_path(char *path, char *cmd)

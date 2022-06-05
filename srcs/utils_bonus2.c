@@ -6,7 +6,7 @@
 /*   By: shwatana <shwatana@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 20:49:33 by shwatana          #+#    #+#             */
-/*   Updated: 2022/06/04 22:52:18 by shwatana         ###   ########.fr       */
+/*   Updated: 2022/06/05 11:47:15 by shwatana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,8 +62,8 @@ static char	*find_path(char *cmd, char **envp)
 		free(path);
 		i++;
 	}
-	perror_with_exit("cmd not found");
-	return (NULL);
+	perror("cmd not found");
+	exit(EXIT_CMD_NOT_FOUND);
 }
 
 static char	*make_cmd_path(char *path, char *cmd)
