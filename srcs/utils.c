@@ -6,7 +6,7 @@
 /*   By: shwatana <shwatana@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 20:49:33 by shwatana          #+#    #+#             */
-/*   Updated: 2022/06/04 22:51:30 by shwatana         ###   ########.fr       */
+/*   Updated: 2022/06/06 19:53:16 by shwatana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,10 @@ void	execute(char *arg, char **envp)
 	char	**cmd;
 	char	*path;
 
-	cmd = ft_split(arg, ' ');
+	cmd = ft_split(replace_space_doble_quart(arg), ' ');
 	if (cmd == NULL)
 		perror_with_exit("split");
+	revert_replace_space(cmd);
 	path = find_path(cmd[0], envp);
 	if (execve(path, cmd, envp) == FAIL)
 		perror_with_exit("execve");

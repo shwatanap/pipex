@@ -1,5 +1,5 @@
-FILES		= pipex.c utils.c
-BFILES		= pipex_bonus.c utils_bonus.c utils_bonus2.c
+FILES		= pipex.c utils.c replace_space.c
+BFILES		= pipex_bonus.c utils_bonus.c utils_bonus2.c replace_space_bonus.c
 OBJS		= $(addprefix $(OBJDIR)/, $(FILES:.c=.o))
 BOBJS		= $(addprefix $(OBJDIR)/, $(BFILES:.c=.o))
 SRCDIR		= srcs
@@ -26,7 +26,7 @@ bonus:
 # サニタイザーを消してください！！！！！！！
 $(NAME): $(OBJS)
 	make -C $(LIBFTDIR)
-	$(CC) -o $(NAME) $^ $(LIBFT) #-g -fsanitize=address
+	$(CC) -o $(NAME) $^ $(LIBFT) -g -fsanitize=address
 
 $(OBJDIR)/%.o: $(SRCDIR)/%.c
 	$(CC) $(CFLAGS) -I $(INCDIR) -c $< -o $@
