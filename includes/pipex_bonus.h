@@ -6,7 +6,7 @@
 /*   By: shwatana <shwatana@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 18:31:18 by shwatana          #+#    #+#             */
-/*   Updated: 2022/06/06 19:53:16 by shwatana         ###   ########.fr       */
+/*   Updated: 2022/06/07 23:24:49 by shwatana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ void	display_usage_with_exit(void);
 void	execute(char *argv, char **envp);
 void	perror_with_exit(const char *str);
 
-char	*replace_space_doble_quart(char *cmd);
-void	revert_replace_space(char **cmd);
+// cmd_parse.c
+char	**cmd_parse(char *cmd);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: shwatana <shwatana@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 18:31:18 by shwatana          #+#    #+#             */
-/*   Updated: 2022/06/06 19:53:16 by shwatana         ###   ########.fr       */
+/*   Updated: 2022/06/07 22:42:01 by shwatana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,5 +51,7 @@ void	perror_with_exit(const char *str);
 
 char	*replace_space_doble_quart(char *cmd);
 void	revert_replace_space(char **cmd);
+
+char	**cmd_parse(char *cmd);
 
 #endif
