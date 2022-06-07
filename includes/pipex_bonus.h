@@ -6,7 +6,7 @@
 /*   By: shwatana <shwatana@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 18:31:18 by shwatana          #+#    #+#             */
-/*   Updated: 2022/06/07 23:24:49 by shwatana         ###   ########.fr       */
+/*   Updated: 2022/06/08 06:36:24 by shwatana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,13 @@ typedef enum e_open_mode
 	FILE_OVER_WRITE,
 	FILE_READ,
 }		t_open_mode;
+
+typedef enum e_process_mode
+{
+	NORMAL_PROCESS,
+	FIRST_PROCESS,
+	LAST_PROCESS,
+}		t_process_mode;
 
 // utils_bonus.c
 int		open_file(char *file_path, t_open_mode i);

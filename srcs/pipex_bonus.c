@@ -6,7 +6,7 @@
 /*   By: shwatana <shwatana@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/04 03:40:55 by shwatana          #+#    #+#             */
-/*   Updated: 2022/06/08 06:43:04 by shwatana         ###   ########.fr       */
+/*   Updated: 2022/06/08 07:53:43 by shwatana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,13 +37,17 @@ int	main(int argc, char **argv, char **envp)
 		else
 			process_mode = NORMAL_PROCESS;
 		child_process(argv[arg_idx], envp, process_mode, file_fd);
+		dprintf(2, "idx: %d\n", arg_idx);
 		arg_idx++;
 	}
 	// close(STDOUT_FILENO);
 	// dup2(out_file_fd, STDOUT_FILENO);
 	// close(out_file_fd);
 	// execute(argv[argc - 2], envp);
-	wait(NULL);
+	close(file_fd[0]);
+	close(file_fd[1]);
+	while (wait(NULL) != FAIL)
+		;
 }
 
 static int	input_process(int argc, char **argv, int (*file_fd)[2])
@@ -60,8 +64,8 @@ static int	input_process(int argc, char **argv, int (*file_fd)[2])
 		first_cmd_idx = 3;
 		return (first_cmd_idx);
 	}
-	(*file_fd)[1] = open_file(argv[argc - 1], FILE_OVER_WRITE);
 	(*file_fd)[0] = open_file(argv[1], FILE_READ);
+	(*file_fd)[1] = open_file(argv[argc - 1], FILE_OVER_WRITE);
 	// close(STDIN_FILENO);
 	// dup2(in_file_fd, STDIN_FILENO);
 	// close(in_file_fd);
@@ -112,6 +116,8 @@ static void	child_process(char *cmd, char **envp, t_process_mode process_mode,
 	int		pipe_fd[2];
 	pid_t	pid;
 
+	close(5);
+	close(6);
 	if (pipe(pipe_fd) == FAIL)
 		perror_with_exit("pipe");
 	pid = fork();
@@ -120,22 +126,28 @@ static void	child_process(char *cmd, char **envp, t_process_mode process_mode,
 	if (pid == CPID)
 	{
 		// close(pipe_fd[PIPE_IN_FD]);
-		// close(STDOUT_FILENO);
+		// close(pipe_fd[PIPE_OUT_FD]);
+		close(STDOUT_FILENO);
+		close(STDIN_FILENO);
+		dprintf(2, "|%d, %d|\n", pipe_fd[0], pipe_fd[1]);
 		if (process_mode == FIRST_PROCESS)
-			dup2(pipe_fd[0], STDIN_FILENO);
+			dup2(file_fd[0], STDIN_FILENO);
 		else
 			dup2(pipe_fd[PIPE_IN_FD], STDIN_FILENO);
 		if (process_mode == LAST_PROCESS)
 			dup2(file_fd[1], STDOUT_FILENO);
 		else
 			dup2(pipe_fd[PIPE_OUT_FD], STDOUT_FILENO);
-		close(pipe_fd[PIPE_OUT_FD]);
+		// close(pipe_fd[PIPE_IN_FD]);
+		// close(pipe_fd[PIPE_OUT_FD]);
+		// close(file_fd[PIPE_IN_FD]);
+		// close(file_fd[PIPE_OUT_FD]);
 		execute(cmd, envp);
 	}
-	// if (waitpid(pid, NULL, 0) == FAIL)
-	// 	perror_with_exit("waitpid");
 	// close(pipe_fd[PIPE_OUT_FD]);
 	// close(STDIN_FILENO);
 	// dup2(pipe_fd[PIPE_IN_FD], STDIN_FILENO);
 	// close(pipe_fd[PIPE_IN_FD]);
+	wait(NULL);
+	dprintf(2, "cmd: %s\n", cmd);
 }
