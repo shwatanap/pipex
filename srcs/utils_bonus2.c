@@ -6,7 +6,7 @@
 /*   By: shwatana <shwatana@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 20:49:33 by shwatana          #+#    #+#             */
-/*   Updated: 2022/06/07 23:27:51 by shwatana         ###   ########.fr       */
+/*   Updated: 2022/06/08 15:54:15 by shwatana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,8 @@ static char	*find_path(char *cmd, char **envp)
 	i = 0;
 	while (envp[i] != NULL && ft_strnstr(envp[i], "PATH=", 5) == NULL)
 		i++;
+	if (ft_strchr(cmd, '/') != NULL || envp[i] == NULL)
+		return (cmd);
 	paths = ft_split(envp[i] + 5, ':');
 	if (paths == NULL)
 		perror_with_exit("ft_split");
