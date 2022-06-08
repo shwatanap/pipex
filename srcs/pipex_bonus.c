@@ -6,7 +6,7 @@
 /*   By: shwatana <shwatana@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/04 03:40:55 by shwatana          #+#    #+#             */
-/*   Updated: 2022/06/08 14:53:29 by shwatana         ###   ########.fr       */
+/*   Updated: 2022/06/08 14:57:45 by shwatana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ int	main(int argc, char **argv, char **envp)
 	int	arg_idx;
 	int	file_fd[2];
 	int	pipe_fd[2];
-	int	old_fd[2];
 	int	use_fd[2];
 
 	if (argc < 5)
@@ -35,8 +34,8 @@ int	main(int argc, char **argv, char **envp)
 			close(use_fd[0]);
 			close(use_fd[1]);
 		}
-		old_fd[0] = pipe_fd[0];
-		old_fd[1] = pipe_fd[1];
+		use_fd[0] = pipe_fd[0];
+		use_fd[1] = pipe_fd[1];
 		// TODO: heredocにも対応させる
 		if (pipe(pipe_fd) == FAIL)
 			perror_with_exit("pipe");
@@ -46,22 +45,14 @@ int	main(int argc, char **argv, char **envp)
 			use_fd[1] = pipe_fd[1];
 		}
 		else if (arg_idx == argc - 2)
-		{
-			use_fd[0] = old_fd[0];
 			use_fd[1] = file_fd[1];
-		}
 		else
-		{
-			use_fd[0] = old_fd[0];
 			use_fd[1] = pipe_fd[1];
-		}
 		child_process(argv[arg_idx], envp, use_fd[0], use_fd[1]);
 		close(use_fd[0]);
 		close(use_fd[1]);
 		arg_idx++;
 	}
-	close(old_fd[0]);
-	close(old_fd[1]);
 	close(pipe_fd[0]);
 	close(pipe_fd[1]);
 	close(use_fd[0]);
