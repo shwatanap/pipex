@@ -6,7 +6,7 @@
 /*   By: shwatana <shwatana@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 18:31:18 by shwatana          #+#    #+#             */
-/*   Updated: 2022/06/09 12:25:18 by shwatana         ###   ########.fr       */
+/*   Updated: 2022/06/09 13:03:46 by shwatana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,11 +32,11 @@
 # define ESC_RESET "\033[0m"
 # define ESC_CLR_RED "\033[38;5;01m"
 
-typedef enum e_pipe_fd
+typedef enum e_fd_idx
 {
-	PIPE_IN_FD,
-	PIPE_OUT_FD,
-}			t_pipe_fd;
+	IN_FD,
+	OUT_FD,
+}			t_fd_idx;
 
 typedef enum e_open_mode
 {

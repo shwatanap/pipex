@@ -6,7 +6,7 @@
 /*   By: shwatana <shwatana@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/04 03:40:55 by shwatana          #+#    #+#             */
-/*   Updated: 2022/06/09 13:00:01 by shwatana         ###   ########.fr       */
+/*   Updated: 2022/06/09 13:07:20 by shwatana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,8 @@ int	main(int argc, char **argv, char **envp)
 		is_first_process = false;
 		arg_idx++;
 	}
-	close(file_fd[0]);
-	close(file_fd[1]);
+	close(file_fd[IN_FD]);
+	close(file_fd[OUT_FD]);
 	while (wait(NULL) != FAIL)
 		;
 }
@@ -63,8 +63,8 @@ static int	input_process(int argc, char **argv, int (*file_fd)[2])
 		first_cmd_idx = 3;
 		return (first_cmd_idx);
 	}
-	(*file_fd)[0] = open_file(argv[1], FILE_READ);
-	(*file_fd)[1] = open_file(argv[argc - 1], FILE_OVER_WRITE);
+	(*file_fd)[IN_FD] = open_file(argv[1], FILE_READ);
+	(*file_fd)[OUT_FD] = open_file(argv[argc - 1], FILE_OVER_WRITE);
 	first_cmd_idx = 2;
 	return (first_cmd_idx);
 }
@@ -77,27 +77,27 @@ static void	exec_process(t_main_arg *main_arg, int arg_idx, int file_fd[2],
 
 	if (!is_first_process)
 	{
-		close(use_fd[0]);
-		close(use_fd[1]);
+		close(use_fd[IN_FD]);
+		close(use_fd[OUT_FD]);
 	}
-	use_fd[0] = pipe_fd[0];
-	use_fd[1] = pipe_fd[1];
+	use_fd[IN_FD] = pipe_fd[IN_FD];
+	use_fd[OUT_FD] = pipe_fd[OUT_FD];
 	// TODO: heredocにも対応させる
 	if (pipe(pipe_fd) == FAIL)
 		perror_with_exit("pipe");
 	if (is_first_process)
 	{
-		use_fd[0] = file_fd[0];
-		use_fd[1] = pipe_fd[1];
+		use_fd[IN_FD] = file_fd[IN_FD];
+		use_fd[OUT_FD] = pipe_fd[OUT_FD];
 	}
 	else if (arg_idx == main_arg->argc - 2)
-		use_fd[1] = file_fd[1];
+		use_fd[OUT_FD] = file_fd[OUT_FD];
 	else
-		use_fd[1] = pipe_fd[1];
+		use_fd[OUT_FD] = pipe_fd[OUT_FD];
 	child_process(main_arg->argv[arg_idx], main_arg->envp, use_fd,
-			pipe_fd[PIPE_IN_FD]);
-	close(use_fd[0]);
-	close(use_fd[1]);
+			pipe_fd[IN_FD]);
+	close(use_fd[IN_FD]);
+	close(use_fd[OUT_FD]);
 }
 
 static void	child_process(char *cmd, char **envp, int *use_fd, int pipe_in_fd)
@@ -112,10 +112,10 @@ static void	child_process(char *cmd, char **envp, int *use_fd, int pipe_in_fd)
 		close(pipe_in_fd);
 		close(STDOUT_FILENO);
 		close(STDIN_FILENO);
-		dup2(use_fd[0], STDIN_FILENO);
-		dup2(use_fd[1], STDOUT_FILENO);
-		close(use_fd[0]);
-		close(use_fd[1]);
+		dup2(use_fd[IN_FD], STDIN_FILENO);
+		dup2(use_fd[OUT_FD], STDOUT_FILENO);
+		close(use_fd[IN_FD]);
+		close(use_fd[OUT_FD]);
 		execute(cmd, envp);
 	}
 }
