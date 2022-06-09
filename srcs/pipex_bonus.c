@@ -6,7 +6,7 @@
 /*   By: shwatana <shwatana@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/04 03:40:55 by shwatana          #+#    #+#             */
-/*   Updated: 2022/06/08 14:57:45 by shwatana         ###   ########.fr       */
+/*   Updated: 2022/06/09 11:32:39 by shwatana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 static int	input_process(int argc, char **argv, int (*file_fd)[2]);
 static void	here_doc(char *limiter);
 static void	here_doc_child_process(int pipe_fd[2], char *limiter);
-static void	child_process(char *cmd, char **envp, int in_fd, int out_fd);
+static void	child_process(char *cmd, char **envp, int *use_fd, int pipe_in_fd);
 
 int	main(int argc, char **argv, char **envp)
 {
@@ -48,15 +48,12 @@ int	main(int argc, char **argv, char **envp)
 			use_fd[1] = file_fd[1];
 		else
 			use_fd[1] = pipe_fd[1];
-		child_process(argv[arg_idx], envp, use_fd[0], use_fd[1]);
+		child_process(argv[arg_idx], envp, use_fd, pipe_fd[PIPE_IN_FD]);
+		// なぜか必要
 		close(use_fd[0]);
 		close(use_fd[1]);
 		arg_idx++;
 	}
-	close(pipe_fd[0]);
-	close(pipe_fd[1]);
-	close(use_fd[0]);
-	close(use_fd[1]);
 	close(file_fd[0]);
 	close(file_fd[1]);
 	while (wait(NULL) != FAIL)
@@ -120,7 +117,7 @@ static void	here_doc_child_process(int pipe_fd[2], char *limiter)
 	exit(EXIT_FAILURE);
 }
 
-static void	child_process(char *cmd, char **envp, int in_fd, int out_fd)
+static void	child_process(char *cmd, char **envp, int *use_fd, int pipe_in_fd)
 {
 	pid_t	pid;
 
@@ -129,12 +126,13 @@ static void	child_process(char *cmd, char **envp, int in_fd, int out_fd)
 		perror_with_exit("fork");
 	if (pid == CPID)
 	{
+		close(pipe_in_fd);
 		close(STDOUT_FILENO);
 		close(STDIN_FILENO);
-		dup2(in_fd, STDIN_FILENO);
-		dup2(out_fd, STDOUT_FILENO);
-		close(in_fd);
-		close(out_fd);
+		dup2(use_fd[0], STDIN_FILENO);
+		dup2(use_fd[1], STDOUT_FILENO);
+		close(use_fd[0]);
+		close(use_fd[1]);
 		execute(cmd, envp);
 	}
 }
