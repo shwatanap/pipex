@@ -6,7 +6,7 @@
 /*   By: shwatana <shwatana@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/04 03:40:55 by shwatana          #+#    #+#             */
-/*   Updated: 2022/06/09 13:07:20 by shwatana         ###   ########.fr       */
+/*   Updated: 2022/06/09 18:38:42 by shwatana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ static int	input_process(int argc, char **argv, int (*file_fd)[2])
 			display_usage_with_exit();
 		(*file_fd)[1] = open_file(argv[argc - 1], FILE_APPEND_WRITE);
 		// TODO: here_docのinfile対応
-		here_doc(argv[2]);
+		(*file_fd)[0] = here_doc(argv[2]);
 		first_cmd_idx = 3;
 		return (first_cmd_idx);
 	}
@@ -82,7 +82,6 @@ static void	exec_process(t_main_arg *main_arg, int arg_idx, int file_fd[2],
 	}
 	use_fd[IN_FD] = pipe_fd[IN_FD];
 	use_fd[OUT_FD] = pipe_fd[OUT_FD];
-	// TODO: heredocにも対応させる
 	if (pipe(pipe_fd) == FAIL)
 		perror_with_exit("pipe");
 	if (is_first_process)
@@ -96,8 +95,6 @@ static void	exec_process(t_main_arg *main_arg, int arg_idx, int file_fd[2],
 		use_fd[OUT_FD] = pipe_fd[OUT_FD];
 	child_process(main_arg->argv[arg_idx], main_arg->envp, use_fd,
 			pipe_fd[IN_FD]);
-	close(use_fd[IN_FD]);
-	close(use_fd[OUT_FD]);
 }
 
 static void	child_process(char *cmd, char **envp, int *use_fd, int pipe_in_fd)
@@ -118,4 +115,6 @@ static void	child_process(char *cmd, char **envp, int *use_fd, int pipe_in_fd)
 		close(use_fd[OUT_FD]);
 		execute(cmd, envp);
 	}
+	close(use_fd[IN_FD]);
+	close(use_fd[OUT_FD]);
 }

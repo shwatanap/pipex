@@ -6,7 +6,7 @@
 /*   By: shwatana <shwatana@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 18:31:18 by shwatana          #+#    #+#             */
-/*   Updated: 2022/06/09 13:03:46 by shwatana         ###   ########.fr       */
+/*   Updated: 2022/06/09 17:35:31 by shwatana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,6 @@ void		perror_with_exit(const char *str);
 char		**cmd_parse(char *cmd);
 
 // here_doc_bonus.c
-void		here_doc(char *limiter);
+int			here_doc(char *limiter);
 
 #endif
