@@ -6,7 +6,7 @@
 /*   By: shwatana <shwatana@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 18:31:18 by shwatana          #+#    #+#             */
-/*   Updated: 2022/06/09 11:44:21 by shwatana         ###   ########.fr       */
+/*   Updated: 2022/06/09 12:25:18 by shwatana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,35 +36,42 @@ typedef enum e_pipe_fd
 {
 	PIPE_IN_FD,
 	PIPE_OUT_FD,
-}		t_pipe_fd;
+}			t_pipe_fd;
 
 typedef enum e_open_mode
 {
 	FILE_APPEND_WRITE,
 	FILE_OVER_WRITE,
 	FILE_READ,
-}		t_open_mode;
+}			t_open_mode;
 
 typedef enum e_process_mode
 {
 	NORMAL_PROCESS,
 	FIRST_PROCESS,
 	LAST_PROCESS,
-}		t_process_mode;
+}			t_process_mode;
+
+typedef struct s_main_arg
+{
+	int		argc;
+	char	**argv;
+	char	**envp;
+}			t_main_arg;
 
 // utils_bonus.c
-int		open_file(char *file_path, t_open_mode i);
-bool	ft_read_line(char **line);
-void	display_usage_with_exit(void);
+int			open_file(char *file_path, t_open_mode i);
+bool		ft_read_line(char **line);
+void		display_usage_with_exit(void);
 
 // utils_bonus2.c
-void	execute(char *argv, char **envp);
-void	perror_with_exit(const char *str);
+void		execute(char *argv, char **envp);
+void		perror_with_exit(const char *str);
 
 // cmd_parse.c
-char	**cmd_parse(char *cmd);
+char		**cmd_parse(char *cmd);
 
 // here_doc_bonus.c
-void	here_doc(char *limiter);
+void		here_doc(char *limiter);
 
 #endif
