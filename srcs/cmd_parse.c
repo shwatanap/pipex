@@ -6,7 +6,7 @@
 /*   By: shwatana <shwatana@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 17:51:41 by shwatana          #+#    #+#             */
-/*   Updated: 2022/06/07 23:21:52 by shwatana         ###   ########.fr       */
+/*   Updated: 2022/06/09 19:18:57 by shwatana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,12 +85,12 @@ static char	*str_cpy(t_list *cmd_list)
 	{
 		dest = ft_strdup(cmd_list->content);
 		if (dest == NULL)
-			perror("ft_strdup");
+			perror_with_exit("ft_strdup");
 		return (dest);
 	}
 	str_len = (size_t)(cmd_list->next->content - cmd_list->content);
 	dest = ft_substr(cmd_list->content, 0, str_len - 1);
 	if (dest == NULL)
-		perror("ft_substr");
+		perror_with_exit("ft_substr");
 	return (dest);
 }
