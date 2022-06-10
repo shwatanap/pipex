@@ -6,7 +6,7 @@
 /*   By: shwatana <shwatana@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/04 03:40:55 by shwatana          #+#    #+#             */
-/*   Updated: 2022/06/09 18:38:42 by shwatana         ###   ########.fr       */
+/*   Updated: 2022/06/10 18:41:55 by shwatana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,8 @@ static int	input_process(int argc, char **argv, int (*file_fd)[2])
 {
 	int	first_cmd_idx;
 
-	if (ft_strncmp(argv[1], HERE_DOG_STR, HERE_DOG_STR_LEN) == SUCCESS)
+	if ((ft_strncmp(argv[1], HERE_DOG_STR, HERE_DOG_STR_LEN) == SUCCESS)
+		&& argv[1][HERE_DOG_STR_LEN] == '\0')
 	{
 		if (argc < 6)
 			display_usage_with_exit();
