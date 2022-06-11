@@ -6,7 +6,7 @@
 /*   By: shwatana <shwatana@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/04 03:40:55 by shwatana          #+#    #+#             */
-/*   Updated: 2022/06/10 18:41:55 by shwatana         ###   ########.fr       */
+/*   Updated: 2022/06/10 18:49:47 by shwatana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,9 +58,8 @@ static int	input_process(int argc, char **argv, int (*file_fd)[2])
 	{
 		if (argc < 6)
 			display_usage_with_exit();
-		(*file_fd)[1] = open_file(argv[argc - 1], FILE_APPEND_WRITE);
-		// TODO: here_docのinfile対応
-		(*file_fd)[0] = here_doc(argv[2]);
+		(*file_fd)[OUT_FD] = open_file(argv[argc - 1], FILE_APPEND_WRITE);
+		(*file_fd)[IN_FD] = here_doc(argv[2]);
 		first_cmd_idx = 3;
 		return (first_cmd_idx);
 	}
