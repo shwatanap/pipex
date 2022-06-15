@@ -1,5 +1,5 @@
 FILES		= pipex.c utils.c cmd_parse.c
-BFILES		= pipex_bonus.c utils_bonus.c utils_bonus2.c cmd_parse.c
+BFILES		= pipex_bonus.c utils_bonus.c utils_bonus2.c cmd_parse.c here_doc_bonus.c
 OBJS		= $(addprefix $(OBJDIR)/, $(FILES:.c=.o))
 BOBJS		= $(addprefix $(OBJDIR)/, $(BFILES:.c=.o))
 SRCDIR		= srcs
