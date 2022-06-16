@@ -25,8 +25,6 @@ int	open_file(char *file_path, t_open_mode i)
 		file = open(file_path, O_RDONLY, 0777);
 	else
 		perror_with_exit("open_file");
-	// if (file == FAIL)
-	// 	perror_with_exit("open");
 	return (file);
 }
 

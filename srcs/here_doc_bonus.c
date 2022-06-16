@@ -12,7 +12,7 @@
 
 #include "../includes/pipex_bonus.h"
 
-static void	here_doc_child_process(int pipe_fd[2], char *limiter);
+static void	here_doc_process(int pipe_fd[2], char *limiter);
 
 int	here_doc(char *limiter)
 {
@@ -20,16 +20,11 @@ int	here_doc(char *limiter)
 
 	if (pipe(pipe_fd) == FAIL)
 		perror_with_exit("pipe");
-	here_doc_child_process(pipe_fd, limiter);
-	// close(pipe_fd[OUT_FD]);
-	// close(STDIN_FILENO);
-	// dup2(pipe_fd[IN_FD], STDIN_FILENO);
-	// close(pipe_fd[IN_FD]);
-	// wait(NULL);
+	here_doc_process(pipe_fd, limiter);
 	return (pipe_fd[IN_FD]);
 }
 
-static void	here_doc_child_process(int pipe_fd[2], char *limiter)
+static void	here_doc_process(int pipe_fd[2], char *limiter)
 {
 	char	*line;
 
