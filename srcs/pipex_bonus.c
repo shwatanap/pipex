@@ -6,7 +6,7 @@
 /*   By: shwatana <shwatana@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/04 03:40:55 by shwatana          #+#    #+#             */
-/*   Updated: 2022/06/10 18:49:47 by shwatana         ###   ########.fr       */
+/*   Updated: 2022/06/16 12:23:00 by shwatana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ static void	exec_process(t_main_arg *main_arg, int arg_idx, int file_fd[2],
 	else
 		use_fd[OUT_FD] = pipe_fd[OUT_FD];
 	child_process(main_arg->argv[arg_idx], main_arg->envp, use_fd,
-			pipe_fd[IN_FD]);
+		pipe_fd[IN_FD]);
 }
 
 static void	child_process(char *cmd, char **envp, int *use_fd, int pipe_in_fd)
@@ -106,6 +106,8 @@ static void	child_process(char *cmd, char **envp, int *use_fd, int pipe_in_fd)
 		perror_with_exit("fork");
 	if (pid == CPID)
 	{
+		if (use_fd[IN_FD] == FAIL)
+			perror_with_exit("infile");
 		close(pipe_in_fd);
 		close(STDOUT_FILENO);
 		close(STDIN_FILENO);
