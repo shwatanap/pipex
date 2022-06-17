@@ -6,7 +6,7 @@
 /*   By: shwatana <shwatana@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/04 03:40:55 by shwatana          #+#    #+#             */
-/*   Updated: 2022/06/16 12:23:00 by shwatana         ###   ########.fr       */
+/*   Updated: 2022/06/17 17:49:26 by shwatana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,8 @@
 static int	input_process(int argc, char **argv, int (*file_fd)[2]);
 static void	exec_process(t_main_arg *main_arg, int arg_idx, int file_fd[2],
 				bool is_first_process);
-static void	child_process(char *cmd, char **envp, int *use_fd, int pipe_in_fd);
+static void	child_process(t_main_arg *main_arg, int arg_idx, int *use_fd,
+				int pipe_in_fd);
 
 void	set_main_arg_struct(int argc, char **argv, char **envp,
 		t_main_arg *main_arg)
@@ -93,11 +94,11 @@ static void	exec_process(t_main_arg *main_arg, int arg_idx, int file_fd[2],
 		use_fd[OUT_FD] = file_fd[OUT_FD];
 	else
 		use_fd[OUT_FD] = pipe_fd[OUT_FD];
-	child_process(main_arg->argv[arg_idx], main_arg->envp, use_fd,
-		pipe_fd[IN_FD]);
+	child_process(main_arg, arg_idx, use_fd, pipe_fd[IN_FD]);
 }
 
-static void	child_process(char *cmd, char **envp, int *use_fd, int pipe_in_fd)
+static void	child_process(t_main_arg *main_arg, int arg_idx, int *use_fd,
+		int pipe_in_fd)
 {
 	pid_t	pid;
 
@@ -108,6 +109,11 @@ static void	child_process(char *cmd, char **envp, int *use_fd, int pipe_in_fd)
 	{
 		if (use_fd[IN_FD] == FAIL)
 			perror_with_exit("infile");
+		if (use_fd[OUT_FD] == FAIL)
+			perror_with_exit("outfile");
+		if (arg_idx == main_arg->argc - 2
+			&& !access(main_arg->argv[main_arg->argc - 2], W_OK))
+			perror_with_exit("permission error");
 		close(pipe_in_fd);
 		close(STDOUT_FILENO);
 		close(STDIN_FILENO);
@@ -115,7 +121,7 @@ static void	child_process(char *cmd, char **envp, int *use_fd, int pipe_in_fd)
 		dup2(use_fd[OUT_FD], STDOUT_FILENO);
 		close(use_fd[IN_FD]);
 		close(use_fd[OUT_FD]);
-		execute(cmd, envp);
+		execute(main_arg->argv[arg_idx], main_arg->envp);
 	}
 	close(use_fd[IN_FD]);
 	close(use_fd[OUT_FD]);
