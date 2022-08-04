@@ -6,7 +6,7 @@
 /*   By: shwatana <shwatana@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 20:49:33 by shwatana          #+#    #+#             */
-/*   Updated: 2022/06/08 15:54:15 by shwatana         ###   ########.fr       */
+/*   Updated: 2022/08/02 09:15:53 by shwatana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,9 @@ void	execute(char *arg, char **envp)
 	char	**cmd;
 	char	*path;
 
-	cmd = cmd_parse(arg);
+	cmd = parse_cmd(arg);
 	if (cmd == NULL)
-		perror_with_exit("cmd_parse");
+		perror_with_exit("parse_cmd");
 	path = find_path(cmd[0], envp);
 	if (execve(path, cmd, envp) == FAIL)
 		perror_with_exit("execve");
@@ -42,7 +42,7 @@ static char	*find_path(char *cmd, char **envp)
 {
 	char	**paths;
 	char	*path;
-	int		i;
+	size_t	i;
 
 	i = 0;
 	while (envp[i] != NULL && ft_strnstr(envp[i], "PATH=", 5) == NULL)

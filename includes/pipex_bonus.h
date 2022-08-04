@@ -6,7 +6,7 @@
 /*   By: shwatana <shwatana@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 18:31:18 by shwatana          #+#    #+#             */
-/*   Updated: 2022/06/09 17:35:31 by shwatana         ###   ########.fr       */
+/*   Updated: 2022/08/02 09:15:53 by shwatana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,8 +68,8 @@ void		display_usage_with_exit(void);
 void		execute(char *argv, char **envp);
 void		perror_with_exit(const char *str);
 
-// cmd_parse.c
-char		**cmd_parse(char *cmd);
+// parse_cmd.c
+char		**parse_cmd(char *cmd);
 
 // here_doc_bonus.c
 int			here_doc(char *limiter);

@@ -6,7 +6,7 @@
 /*   By: shwatana <shwatana@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 17:51:41 by shwatana          #+#    #+#             */
-/*   Updated: 2022/06/09 19:18:57 by shwatana         ###   ########.fr       */
+/*   Updated: 2022/08/02 09:15:53 by shwatana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ static bool	switch_has_single_quart(bool has_single_quart);
 static char	**convert_list_to_str_arr(t_list *cmd_list);
 static char	*str_cpy(t_list *cmd_list);
 
-char	**cmd_parse(char *cmd)
+char	**parse_cmd(char *cmd)
 {
 	size_t	i;
 	bool	has_single_quart;
